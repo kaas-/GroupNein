@@ -4,10 +4,6 @@ using UnityEngine;
 
 public class GameManager : MonoBehaviour {
 
-    public float _timeLimit;
-
-    private static float timeLimit;
-
     private static GameManager instance = null;
     private static bool playing = false;
 
@@ -20,12 +16,10 @@ public class GameManager : MonoBehaviour {
         }
         else
         {
-            Destroy(this);
+            Destroy(gameObject);
         }
 
         DontDestroyOnLoad(this);
-
-        timeLimit = _timeLimit;
     }
 
     // Update is called once per frame
@@ -34,7 +28,7 @@ public class GameManager : MonoBehaviour {
 
         if (playing)
         {
-            InputManager.CheckShootButton();
+            
         }
         else
         {
@@ -46,11 +40,7 @@ public class GameManager : MonoBehaviour {
     public static void StartGame()
     {
         playing = true;
-
-        if (timeLimit < 100)
-        {
-            print("HI!");
-        }
+        print("Started");
     }
 
     public static void EndGame()
@@ -58,9 +48,14 @@ public class GameManager : MonoBehaviour {
         playing = false;
     }
 
-    public static void Shoot()
+    public static void ResetGame()
     {
-        print("PEW!");
+        Application.LoadLevel(0);
+    }
+
+    public static void Interact()
+    {
+        
     }
 
     public static bool GetPlaying()
