@@ -6,9 +6,9 @@ public class Enemy : MonoBehaviour {
 
 	// Use this for initialization
 	void OnCollisionEnter(Collision col) {
-		if (col.gameObject.Player == "Player") {
+		if (col.gameObject.tag == "Player") {
 			Debug.Log ("You Lost :(");
-			GameManager.ResetLevel;
+			GameManager.ResetGame();
 
 		}
 		
