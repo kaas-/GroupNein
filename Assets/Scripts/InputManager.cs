@@ -4,13 +4,37 @@ using UnityEngine;
 
 public class InputManager : MonoBehaviour {
 
-	// Use this for initialization
-	void Start () {
-		
-	}
-	
-	// Update is called once per frame
-	void Update () {
-		
-	}
+    private static InputManager instance = null;
+
+    // Use this for initialization
+    void Awake()
+    {
+        if (instance == null)
+        {
+            instance = this;
+        }
+        else
+        {
+            Destroy(this);
+        }
+
+        DontDestroyOnLoad(this);
+
+    }
+
+    public static void CheckStartButton()
+    {
+        if (Input.GetKeyDown(KeyCode.Return))
+        {
+            GameManager.StartGame();
+        }
+    }
+
+    public static void CheckShootButton()
+    {
+        if (Input.GetKeyDown(KeyCode.A))
+        {
+            GameManager.Shoot();
+        }
+    }
 }
