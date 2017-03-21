@@ -3,16 +3,15 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public class Door : MonoBehaviour {
-	public GameObject WinningText
-	public void Win()
+	private void Win()
 	{
-		WinningText.SetActive (true);
-		GameManager.ResetLevel;
+        Debug.Log("You win!");
+		GameManager.ResetGame();
 	}
 
-	void OnTriggerEnter()
+	void OnTriggerEnter(Collider col)
 	{
-		GameManager.instance.Win ();
+		Win();
 	}
 
 
