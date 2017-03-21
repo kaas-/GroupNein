@@ -30,11 +30,11 @@ public class InputManager : MonoBehaviour {
         }
     }
 
-    public static void CheckShootButton()
+    public static void CheckEButton()
     {
-        if (Input.GetKeyDown(KeyCode.A))
+        if (Input.GetKeyDown(KeyCode.E))
         {
-            GameManager.Shoot();
+            GameManager.Interact();
         }
     }
 }
