@@ -30,35 +30,11 @@ public class InputManager : MonoBehaviour {
         }
     }
 
-    public static void CheckWButton()
+    public static void CheckEButton()
     {
-        if (Input.GetKeyDown(KeyCode.W))
+        if (Input.GetKeyDown(KeyCode.E))
         {
-            GameManager.PlayerForward();
-        }
-    }
-
-    public static void CheckAButton()
-    {
-        if (Input.GetKeyDown(KeyCode.A))
-        {
-            GameManager.PlayerLeft();
-        }
-    }
-
-    public static void CheckSButton()
-    {
-        if (Input.GetKeyDown(KeyCode.S))
-        {
-            GameManager.PlayerBack();
-        }
-    }
-
-    public static void CheckDButton()
-    {
-        if (Input.GetKeyDown(KeyCode.D))
-        {
-            GameManager.PlayerRight();
+            GameManager.Interact();
         }
     }
 }
