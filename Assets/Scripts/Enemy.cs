@@ -7,14 +7,17 @@ public class Enemy : MonoBehaviour {
     public float searchRadius;
     public float chaseRadius;
     public float turnSpeed;
+    public float threshTime;
     public Vector3[] patrolPoints;
 
-
+    private GameObject _player;
     private Transform _lookAtTransform;
     private string state = "Patrol";
     private float curRadius;
     private NavMeshAgent _navMeshAgent;
-    public Vector3 curTar;
+    private Vector3 curTar;
+    private Vector3 lastPos;
+    private float startTime;
 
     void Awake()
     {
@@ -25,21 +28,22 @@ public class Enemy : MonoBehaviour {
 
     public void stateControl(GameObject player)
     {
+        _player = player;
         Turn();
         Move(curTar);
         if (state == "Patrol")
         {
             Patrol();
-            checkForPlayer(player);
+            checkForPlayer();
         }
         else if(state == "Chase")
         {
-            Chase(player);
+            Chase();
         }
         else if(state == "Search")
         {
-            checkForPlayer(player);
-            
+            checkForPlayer();
+            Search();
         }
     }
 
@@ -60,29 +64,36 @@ public class Enemy : MonoBehaviour {
         
     }
 
-    private void Chase(GameObject player)
+    private void Chase()
     {
         _navMeshAgent.speed = 8;
-        Move(player.transform.position);
-        if (Vector3.Distance(this.transform.position, player.transform.position) > chaseRadius)
+        Move(_player.transform.position);
+        if (Vector3.Distance(this.transform.position, _player.transform.position) > chaseRadius)
         {
             _navMeshAgent.speed = 3.8f;
-            state = "Patrol";
-        }
-    }
-
-    private void checkForPlayer(GameObject player)
-    {
-        if(Vector3.Distance(this.transform.position, player.transform.position) < searchRadius)
-        {
-            //Move(player.transform.position);
-            state = "Chase";
+            state = "Search";
+            startTime = Time.time;
         }
     }
 
     private void Search()
     {
+        Move(lastPos);
+        checkForPlayer();
+        Debug.Log("Time-Time = " + (Time.time - startTime) + ", threshold = " + threshTime + ", starTime = " + startTime);
+        if(Time.time - startTime > threshTime)
+        {
+            state = "Patrol";
+        }
+    }
 
+    private void checkForPlayer()
+    {
+        if(Vector3.Distance(this.transform.position, _player.transform.position) < searchRadius)
+        {
+            lastPos = _player.transform.position;
+            state = "Chase";
+        }
     }
 
     private void LookAt(Transform lookAtTransform)
