@@ -6,9 +6,11 @@ public class GameManager : MonoBehaviour {
 
     private static GameManager instance = null;
     private static bool playing = false;
+    private Enemy _enemy;
+    private GameObject _player;
 
     // Use this for initialization
-    void Awake()
+    private void Awake()
     {
         if (instance == null)
         {
@@ -23,12 +25,14 @@ public class GameManager : MonoBehaviour {
     }
 
     // Update is called once per frame
-    void Update()
+    private void Update()
     {
-
+        _enemy = GameObject.FindGameObjectWithTag("Enemy").GetComponent<Enemy>();
+        _player = GameObject.FindGameObjectWithTag("Player");
+        //Debug.Log(_player.transform.position);
         if (playing)
         {
-            
+            _enemy.stateControl(_player);
         }
         else
         {

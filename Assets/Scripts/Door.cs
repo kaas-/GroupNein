@@ -11,7 +11,10 @@ public class Door : MonoBehaviour {
 
 	void OnTriggerEnter(Collider col)
 	{
-		Win();
+        if (col.gameObject.tag == "Player")
+        {
+            Win();
+        }
 	}
 
 
