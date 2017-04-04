@@ -32,8 +32,10 @@ public class InputManager : MonoBehaviour {
 
     public static void CheckEButton()
     {
+        Debug.Log("Check E Button");
         if (Input.GetKeyDown(KeyCode.E))
         {
+            Debug.Log("E pressed");
             GameManager.Interact();
         }
     }

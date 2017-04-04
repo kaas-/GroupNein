@@ -7,19 +7,9 @@ public class GameManager : MonoBehaviour {
 
     private static GameManager instance = null;
     private static bool playing = false;
-    private static bool _playerHasKey = false;
-    public static bool PlayerHasKey
-    {
-        get { return _playerHasKey; }
-        set { _playerHasKey = value; }
-    }
 
     private Enemy _enemy;
     private GameObject _player;
-    public GameObject Player
-    {
-        get { return _player; }
-    }
 
     // Use this for initialization
     private void Awake()
@@ -53,6 +43,7 @@ public class GameManager : MonoBehaviour {
         else
         {
             InputManager.CheckStartButton();
+            InputManager.CheckEButton();
         }
 
     }
@@ -75,13 +66,10 @@ public class GameManager : MonoBehaviour {
 
     public static void Interact()
     {
-
+        Debug.Log("Interacting");
+        Player.Interact();
     }
 
-    private void _interact()
-    {
-
-    }
 
     public static bool GetPlaying()
     {
