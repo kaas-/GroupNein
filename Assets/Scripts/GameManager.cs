@@ -38,7 +38,7 @@ public class GameManager : MonoBehaviour {
         //Debug.Log(_player.transform.position);
         if (playing)
         {
-            _enemy.stateControl(_player);
+            _enemy.stateControl(_player, !Player.IsRunning);
         }
         else
         {
