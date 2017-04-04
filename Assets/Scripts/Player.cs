@@ -44,6 +44,7 @@ public class Player : MonoBehaviour {
             {
                 case "Key":
                     _hasKey = true;
+                    Destroy(hit.collider.gameObject);
                     break;
                 case "Door":
                     if (_hasKey)
