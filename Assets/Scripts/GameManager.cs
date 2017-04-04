@@ -75,7 +75,7 @@ public class GameManager : MonoBehaviour {
 
     public static void Interact()
     {
-        _interact()
+
     }
 
     private void _interact()
