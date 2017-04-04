@@ -11,10 +11,15 @@ public class GameManager : MonoBehaviour {
     public static bool PlayerHasKey
     {
         get { return _playerHasKey; }
+        set { _playerHasKey = value; }
     }
 
     private Enemy _enemy;
     private GameObject _player;
+    public GameObject Player
+    {
+        get { return _player; }
+    }
 
     // Use this for initialization
     private void Awake()
@@ -52,11 +57,6 @@ public class GameManager : MonoBehaviour {
 
     }
 
-    public static void addKey()
-    {
-        _playerHasKey = true;
-    }
-
     public static void StartGame()
     {
         playing = true;
@@ -74,6 +74,11 @@ public class GameManager : MonoBehaviour {
     }
 
     public static void Interact()
+    {
+        _interact()
+    }
+
+    private void _interact()
     {
 
     }

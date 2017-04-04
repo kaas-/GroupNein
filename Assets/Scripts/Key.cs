@@ -8,7 +8,7 @@ public class Key : MonoBehaviour {
     {
         if (col.gameObject.tag == "Player")
         {
-            GameManager.addKey();
+            GameManager.PlayerHasKey = true;
             Destroy(this.gameObject);
         }
     }
