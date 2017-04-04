@@ -5,6 +5,7 @@ using UnityEngine.AI;
 
 public class Enemy : MonoBehaviour {
     public float searchRadius;
+    public float searchRunRadius;
     public float chaseRadius;
     public float turnSpeed;
     public float threshTime;
@@ -26,7 +27,7 @@ public class Enemy : MonoBehaviour {
         curTar = patrolPoints[0];
     }
 
-    public void stateControl(GameObject player)
+    public void stateControl(GameObject player, bool isWalking)
     {
         _player = player;
         Turn();
@@ -42,7 +43,15 @@ public class Enemy : MonoBehaviour {
         }
         else if(state == "Search")
         {
-            checkForPlayer();
+            if(isWalking == true)
+            {
+                checkForPlayer();
+            }
+            else
+            {
+                checkForPlayerRun();
+            }
+            
             Search();
         }
     }
@@ -72,6 +81,7 @@ public class Enemy : MonoBehaviour {
         {
             _navMeshAgent.speed = 3.8f;
             state = "Search";
+            lastPos = _player.transform.position;
             startTime = Time.time;
         }
     }
@@ -90,6 +100,15 @@ public class Enemy : MonoBehaviour {
     private void checkForPlayer()
     {
         if(Vector3.Distance(this.transform.position, _player.transform.position) < searchRadius)
+        {
+            lastPos = _player.transform.position;
+            state = "Chase";
+        }
+    }
+
+    private void checkForPlayerRun()
+    {
+        if (Vector3.Distance(this.transform.position, _player.transform.position) < searchRunRadius)
         {
             lastPos = _player.transform.position;
             state = "Chase";
