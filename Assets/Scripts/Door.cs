@@ -11,7 +11,7 @@ public class Door : MonoBehaviour {
 
 	void OnTriggerEnter(Collider col)
 	{
-        if (col.gameObject.tag == "Player")
+        if (col.gameObject.tag == "Player" && GameManager.PlayerHasKey)
         {
             Win();
         }

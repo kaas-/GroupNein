@@ -1,11 +1,18 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class GameManager : MonoBehaviour {
 
     private static GameManager instance = null;
     private static bool playing = false;
+    private static bool _playerHasKey = false;
+    public static bool PlayerHasKey
+    {
+        get { return _playerHasKey; }
+    }
+
     private Enemy _enemy;
     private GameObject _player;
 
@@ -24,11 +31,15 @@ public class GameManager : MonoBehaviour {
         DontDestroyOnLoad(this);
     }
 
-    // Update is called once per frame
-    private void Update()
+    private void Start()
     {
         _enemy = GameObject.FindGameObjectWithTag("Enemy").GetComponent<Enemy>();
         _player = GameObject.FindGameObjectWithTag("Player");
+    }
+
+    // Update is called once per frame
+    private void Update()
+    {
         //Debug.Log(_player.transform.position);
         if (playing)
         {
@@ -39,6 +50,11 @@ public class GameManager : MonoBehaviour {
             InputManager.CheckStartButton();
         }
 
+    }
+
+    public static void addKey()
+    {
+        _playerHasKey = true;
     }
 
     public static void StartGame()
@@ -54,12 +70,12 @@ public class GameManager : MonoBehaviour {
 
     public static void ResetGame()
     {
-        Application.LoadLevel(0);
+        SceneManager.LoadScene(0);
     }
 
     public static void Interact()
     {
-        
+
     }
 
     public static bool GetPlaying()
