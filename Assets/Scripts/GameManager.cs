@@ -39,12 +39,12 @@ public class GameManager : MonoBehaviour {
         if (playing)
         {
             _enemy.stateControl(_player, !Player.IsRunning);
+            InputManager.CheckEButton();
+            InputManager.CheckRunButton();
         }
         else
         {
             InputManager.CheckStartButton();
-            InputManager.CheckEButton();
-            InputManager.CheckRunButton();
         }
 
     }
@@ -69,6 +69,7 @@ public class GameManager : MonoBehaviour {
     {
         Debug.Log("Interacting");
         Player.Interact();
+        //UIManager.Test();
     }
 
 
