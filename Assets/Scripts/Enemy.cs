@@ -4,29 +4,28 @@ using UnityEngine;
 using UnityEngine.AI;
 
 public class Enemy : MonoBehaviour {
-    public float searchRadius;
-    public float chaseRadius;
-    public float turnSpeed;
-    public float threshTime;
-    public Vector3[] patrolPoints;
+    public float searchRadius = 5;
+    public float searchRunRadius = 10;
+    public float chaseRadius = 20;
+    public float turnSpeed = 5;
+    public float threshTime = 5;
+    public Vector3[] patrolPoints = new[] {new Vector3(123, 0.9f, -85), new Vector3(100, 0.9f, -50), new Vector3(50, 0.9f, -65) };
 
     private GameObject _player;
     private Transform _lookAtTransform;
     private string state = "Patrol";
-    private float curRadius;
     private NavMeshAgent _navMeshAgent;
-    private Vector3 curTar;
+    public Vector3 curTar;
     private Vector3 lastPos;
     private float startTime;
 
     void Awake()
     {
         _navMeshAgent = this.GetComponent<NavMeshAgent>();
-        curRadius = searchRadius;
         curTar = patrolPoints[0];
     }
 
-    public void stateControl(GameObject player)
+    public void stateControl(GameObject player, bool isWalking)
     {
         _player = player;
         Turn();
@@ -34,7 +33,14 @@ public class Enemy : MonoBehaviour {
         if (state == "Patrol")
         {
             Patrol();
-            checkForPlayer();
+            if (isWalking == true)
+            {
+                checkForPlayer();
+            }
+            else
+            {
+                checkForPlayerRun();
+            }
         }
         else if(state == "Chase")
         {
@@ -42,7 +48,15 @@ public class Enemy : MonoBehaviour {
         }
         else if(state == "Search")
         {
-            checkForPlayer();
+            if(isWalking == true)
+            {
+                checkForPlayer();
+            }
+            else
+            {
+                checkForPlayerRun();
+            }
+            
             Search();
         }
     }
@@ -72,6 +86,7 @@ public class Enemy : MonoBehaviour {
         {
             _navMeshAgent.speed = 3.8f;
             state = "Search";
+            lastPos = _player.transform.position;
             startTime = Time.time;
         }
     }
@@ -90,6 +105,15 @@ public class Enemy : MonoBehaviour {
     private void checkForPlayer()
     {
         if(Vector3.Distance(this.transform.position, _player.transform.position) < searchRadius)
+        {
+            lastPos = _player.transform.position;
+            state = "Chase";
+        }
+    }
+
+    private void checkForPlayerRun()
+    {
+        if (Vector3.Distance(this.transform.position, _player.transform.position) < searchRunRadius)
         {
             lastPos = _player.transform.position;
             state = "Chase";
