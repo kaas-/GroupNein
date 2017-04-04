@@ -44,6 +44,7 @@ public class GameManager : MonoBehaviour {
         {
             InputManager.CheckStartButton();
             InputManager.CheckEButton();
+            InputManager.CheckRunButton();
         }
 
     }

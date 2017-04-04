@@ -12,6 +12,13 @@ public class Player : MonoBehaviour {
         set { _hasKey = value; }
     }
 
+    private static bool _isRunning = false;
+    public static bool IsRunning
+    {
+        get { return _isRunning; }
+        set { _isRunning = value; }
+    }
+
 
     // Use this for initialization
     void Awake()
