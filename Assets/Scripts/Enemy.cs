@@ -190,7 +190,10 @@ public class Enemy : MonoBehaviour {
 			GameManager.ResetGame();
             GameManager.StartGame();
 		}
-		
 	}
-
+    
+    public void setPatrolPoint(Vector3[] patrolPoint)
+    {
+        patrolPoints = patrolPoint;
+    }
 }

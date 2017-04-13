@@ -7,11 +7,15 @@ public class GameManager : MonoBehaviour {
 
     private static GameManager instance = null;
     private static bool playing = false;
+    public static int amountOfEnemies = 3;
+    public static Vector3[,] EnemPatrolPoints = new Vector3[3,3];
 
-    private GameObject[] enemies;
-    private Enemy[] enemyScripts;
-    private Enemy _enemy;
-    private GameObject _player;
+    public GameObject mummyEne;
+    public static GameObject mummyEne2;
+    private static GameObject[] enemies;
+    private static Enemy[] enemyScripts;
+    private static Enemy _enemy;
+    private static GameObject _player;
 
     // Use this for initialization
     private void Awake()
@@ -31,12 +35,28 @@ public class GameManager : MonoBehaviour {
 
     private void Start()
     {
-       // _enemy = GameObject.FindGameObjectWithTag("Enemy").GetComponent<Enemy>();
-        enemies = GameObject.FindGameObjectsWithTag("Enemy");
-        enemyScripts = new Enemy[enemies.Length];
+        mummyEne2 = mummyEne;
+        //setting up Patrol Points
+        EnemPatrolPoints[0, 0] = new Vector3(123, 0.9f, -85);
+        EnemPatrolPoints[0, 1] = new Vector3(100, 0.9f, -50);
+        EnemPatrolPoints[0, 2] = new Vector3(100, 0.9f, -50);
+
+        EnemPatrolPoints[1, 0] = new Vector3(123, 0.9f, -85);
+        EnemPatrolPoints[1, 1] = new Vector3(100, 0.9f, -50);
+        EnemPatrolPoints[1, 2] = new Vector3(100, 0.9f, -50);
+
+        EnemPatrolPoints[2, 0] = new Vector3(123, 0.9f, -85);
+        EnemPatrolPoints[2, 1] = new Vector3(100, 0.9f, -50);
+        EnemPatrolPoints[2, 2] = new Vector3(100, 0.9f, -50);
+
+
+        enemies = new GameObject[amountOfEnemies];
+        enemyScripts = new Enemy[amountOfEnemies];
         for(int i = 0; i < enemies.Length; i++)
         {
+            enemies[i] = Instantiate(mummyEne);
             enemyScripts[i] = enemies[i].GetComponent<Enemy>();
+            enemyScripts[i].setPatrolPoint(new Vector3[3] { EnemPatrolPoints[i, 0], EnemPatrolPoints[i, 1], EnemPatrolPoints[i, 02] });
         }
         _player = GameObject.FindGameObjectWithTag("Player");
     }
@@ -77,6 +97,14 @@ public class GameManager : MonoBehaviour {
     {
         SceneManager.LoadScene(0);
         playing = false;
+        enemies = new GameObject[amountOfEnemies];
+        enemyScripts = new Enemy[amountOfEnemies];
+        for (int i = 0; i < enemies.Length; i++)
+        {
+            enemies[i] = Instantiate(mummyEne2);
+            enemyScripts[i] = enemies[i].GetComponent<Enemy>();
+            enemyScripts[i].setPatrolPoint(new Vector3[3] { EnemPatrolPoints[i, 0], EnemPatrolPoints[i, 1], EnemPatrolPoints[i, 02] });
+        }
     }
 
     public static void Interact()
@@ -87,9 +115,13 @@ public class GameManager : MonoBehaviour {
         
     }
 
-
     public static bool GetPlaying()
     {
         return playing;
+    }
+
+    private void tester()
+    {
+
     }
 }

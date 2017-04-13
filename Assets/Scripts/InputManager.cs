@@ -37,6 +37,7 @@ public class InputManager : MonoBehaviour {
             GameManager.Interact();
         }
     }
+    
 
     public static void CheckRunButton()
     {
