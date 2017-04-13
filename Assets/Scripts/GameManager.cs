@@ -8,6 +8,8 @@ public class GameManager : MonoBehaviour {
     private static GameManager instance = null;
     private static bool playing = false;
 
+    private GameObject[] enemies;
+    private Enemy[] enemyScripts;
     private Enemy _enemy;
     private GameObject _player;
 
@@ -24,11 +26,18 @@ public class GameManager : MonoBehaviour {
         }
 
         DontDestroyOnLoad(this);
+
     }
 
     private void Start()
     {
-        _enemy = GameObject.FindGameObjectWithTag("Enemy").GetComponent<Enemy>();
+       // _enemy = GameObject.FindGameObjectWithTag("Enemy").GetComponent<Enemy>();
+        enemies = GameObject.FindGameObjectsWithTag("Enemy");
+        enemyScripts = new Enemy[enemies.Length];
+        for(int i = 0; i < enemies.Length; i++)
+        {
+            enemyScripts[i] = enemies[i].GetComponent<Enemy>();
+        }
         _player = GameObject.FindGameObjectWithTag("Player");
     }
 
@@ -38,7 +47,11 @@ public class GameManager : MonoBehaviour {
         //Debug.Log(_player.transform.position);
         if (playing)
         {
-            _enemy.stateControl(_player, !Player.IsRunning);
+            //_enemy.stateControl(_player, !Player.IsRunning);
+            for(int i = 0; i < enemies.Length; i++)
+            {
+                enemyScripts[i].stateControl(_player, !Player.IsRunning);
+            }
             InputManager.CheckEButton();
             InputManager.CheckRunButton();
         }
@@ -63,6 +76,7 @@ public class GameManager : MonoBehaviour {
     public static void ResetGame()
     {
         SceneManager.LoadScene(0);
+        playing = false;
     }
 
     public static void Interact()
@@ -70,6 +84,7 @@ public class GameManager : MonoBehaviour {
         Debug.Log("Interacting");
         Player.Interact();
         //UIManager.Test();
+        
     }
 
 

@@ -4,6 +4,9 @@ using UnityEngine;
 using UnityEngine.AI;
 
 public class Enemy : MonoBehaviour {
+    public float eneWalkSpeed = 5;
+    public float eneRunSpeed = 9;
+    public float AttRange = 5;
     public float searchRadius = 5;
     public float searchRunRadius = 10;
     public float chaseRadius = 20;
@@ -13,15 +16,17 @@ public class Enemy : MonoBehaviour {
 
     private GameObject _player;
     private Transform _lookAtTransform;
-    private string state = "Patrol";
+    public string state = "Patrol";
     private NavMeshAgent _navMeshAgent;
-    public Vector3 curTar;
+    private Vector3 curTar;
     private Vector3 lastPos;
     private float startTime;
+    private Animator _anim;
 
     void Awake()
     {
         _navMeshAgent = this.GetComponent<NavMeshAgent>();
+        _anim = this.GetComponent<Animator>();
         curTar = patrolPoints[0];
     }
 
@@ -59,10 +64,16 @@ public class Enemy : MonoBehaviour {
             
             Search();
         }
+        else if (state == "Attack")
+        {
+            Attack();
+        }
     }
 
     private void Patrol()
     {
+        _navMeshAgent.speed = eneWalkSpeed;
+        _anim.PlayInFixedTime("Walk_Weaponless");
         if (transform.position.x == patrolPoints[0].x && transform.position.z == patrolPoints[0].z)
         {
             curTar = patrolPoints[1];
@@ -80,14 +91,19 @@ public class Enemy : MonoBehaviour {
 
     private void Chase()
     {
-        _navMeshAgent.speed = 8;
+        _anim.PlayInFixedTime("Run_Weponless");
+        _anim.speed = 0.9f;
+        _navMeshAgent.speed = eneRunSpeed;
         Move(_player.transform.position);
         if (Vector3.Distance(this.transform.position, _player.transform.position) > chaseRadius)
         {
-            _navMeshAgent.speed = 3.8f;
             state = "Search";
             lastPos = _player.transform.position;
             startTime = Time.time;
+        }
+        if (Vector3.Distance(this.transform.position, _player.transform.position) < AttRange)
+        {
+            state = "Attack";
         }
     }
 
@@ -95,10 +111,32 @@ public class Enemy : MonoBehaviour {
     {
         Move(lastPos);
         checkForPlayer();
-        Debug.Log("Time-Time = " + (Time.time - startTime) + ", threshold = " + threshTime + ", starTime = " + startTime);
-        if(Time.time - startTime > threshTime)
+        //Debug.Log("Time-Time = " + (Time.time - startTime) + ", threshold = " + threshTime + ", starTime = " + startTime);
+        if(transform.position.x == lastPos.x && transform.position.z == lastPos.z)
         {
-            state = "Patrol";
+            _anim.PlayInFixedTime("Look_Around");
+            if (Time.time - startTime > threshTime)
+            {
+                state = "Patrol";
+            }
+        }
+        else
+        {
+            _anim.PlayInFixedTime("Run_Weponless");
+            startTime = Time.time;
+        }
+        
+    }
+
+    private void Attack()
+    {
+        if (Vector3.Distance(this.transform.position, _player.transform.position) < AttRange)
+        {
+            GameManager.ResetGame();
+        }
+        else
+        {
+            state = "Chase";
         }
     }
 
