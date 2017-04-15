@@ -28,6 +28,7 @@ public class Enemy : MonoBehaviour {
         _navMeshAgent = this.GetComponent<NavMeshAgent>();
         _anim = this.GetComponent<Animator>();
         curTar = patrolPoints[0];
+        state = "Patrol";
     }
 
     public void stateControl(GameObject player, bool isWalking)

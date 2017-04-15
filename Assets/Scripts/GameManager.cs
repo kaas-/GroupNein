@@ -95,7 +95,7 @@ public class GameManager : MonoBehaviour {
 
     public static void ResetGame()
     {
-        SceneManager.LoadScene(0);
+        /*SceneManager.LoadScene(0);
         playing = false;
         enemies = new GameObject[amountOfEnemies];
         enemyScripts = new Enemy[amountOfEnemies];
@@ -104,7 +104,24 @@ public class GameManager : MonoBehaviour {
             enemies[i] = Instantiate(mummyEne2);
             enemyScripts[i] = enemies[i].GetComponent<Enemy>();
             enemyScripts[i].setPatrolPoint(new Vector3[3] { EnemPatrolPoints[i, 0], EnemPatrolPoints[i, 1], EnemPatrolPoints[i, 02] });
+        }*/
+        playing = false;
+        enemies = GameObject.FindGameObjectsWithTag("Enemy");
+        for(int i = 0; i < enemies.Length; i++)
+        {
+            Destroy(enemies[i]);
         }
+        enemies = new GameObject[amountOfEnemies];
+        enemyScripts = new Enemy[amountOfEnemies];
+        for (int i = 0; i < enemies.Length; i++)
+        {
+            enemies[i] = Instantiate(mummyEne2);
+            enemyScripts[i] = enemies[i].GetComponent<Enemy>();
+            enemyScripts[i].setPatrolPoint(new Vector3[3] { EnemPatrolPoints[i, 0], EnemPatrolPoints[i, 1], EnemPatrolPoints[i, 02] });
+        }
+        _player.transform.position = new Vector3(123.59f, 1.28f, -89.3f);
+        Player.resetHasKey();
+
     }
 
     public static void Interact()
