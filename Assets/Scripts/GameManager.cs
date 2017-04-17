@@ -7,8 +7,8 @@ public class GameManager : MonoBehaviour {
 
     private static GameManager instance = null;
     private static bool playing = false;
-    public static int amountOfEnemies = 3;
-    public static Vector3[,] EnemPatrolPoints = new Vector3[3,3];
+    public static int amountOfEnemies = 4;
+    public static Vector3[,] EnemPatrolPoints = new Vector3[4,3];
 
     public GameObject mummyEne;
     public static GameObject mummyEne2;
@@ -48,6 +48,10 @@ public class GameManager : MonoBehaviour {
         EnemPatrolPoints[2, 0] = new Vector3(123, 0.9f, -85);
         EnemPatrolPoints[2, 1] = new Vector3(100, 0.9f, -50);
         EnemPatrolPoints[2, 2] = new Vector3(100, 0.9f, -50);
+
+        EnemPatrolPoints[3, 0] = new Vector3(123, 0.9f, -85);
+        EnemPatrolPoints[3, 1] = new Vector3(100, 0.9f, -50);
+        EnemPatrolPoints[3, 2] = new Vector3(100, 0.9f, -50);
 
 
         enemies = new GameObject[amountOfEnemies];
@@ -95,16 +99,6 @@ public class GameManager : MonoBehaviour {
 
     public static void ResetGame()
     {
-        /*SceneManager.LoadScene(0);
-        playing = false;
-        enemies = new GameObject[amountOfEnemies];
-        enemyScripts = new Enemy[amountOfEnemies];
-        for (int i = 0; i < enemies.Length; i++)
-        {
-            enemies[i] = Instantiate(mummyEne2);
-            enemyScripts[i] = enemies[i].GetComponent<Enemy>();
-            enemyScripts[i].setPatrolPoint(new Vector3[3] { EnemPatrolPoints[i, 0], EnemPatrolPoints[i, 1], EnemPatrolPoints[i, 02] });
-        }*/
         playing = false;
         enemies = GameObject.FindGameObjectsWithTag("Enemy");
         for(int i = 0; i < enemies.Length; i++)
