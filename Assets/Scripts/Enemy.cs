@@ -196,5 +196,7 @@ public class Enemy : MonoBehaviour {
     public void setPatrolPoint(Vector3[] patrolPoint)
     {
         patrolPoints = patrolPoint;
+        curTar = patrolPoints[0];
+        state = "Patrol";
     }
 }
