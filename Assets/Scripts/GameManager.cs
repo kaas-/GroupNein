@@ -12,6 +12,9 @@ public class GameManager : MonoBehaviour {
 
     public GameObject mummyEne;
     public static GameObject mummyEne2;
+    public GameObject scarabPrefab;
+    public static GameObject scarab;
+    private static GameObject[] scarabArray = new GameObject[3];
     private static GameObject[] enemies;
     private static Enemy[] enemyScripts;
     private static Enemy _enemy;
@@ -36,6 +39,7 @@ public class GameManager : MonoBehaviour {
     private void Start()
     {
         mummyEne2 = mummyEne;
+        scarab = scarabPrefab;
         //setting up Patrol Points
         EnemPatrolPoints[0, 0] = new Vector3(41, 0.9f, -49);
         EnemPatrolPoints[0, 1] = new Vector3(0, 0.9f, -49);
@@ -62,6 +66,9 @@ public class GameManager : MonoBehaviour {
             enemyScripts[i] = enemies[i].GetComponent<Enemy>();
             enemyScripts[i].setPatrolPoint(new Vector3[3] { EnemPatrolPoints[i, 0], EnemPatrolPoints[i, 1], EnemPatrolPoints[i, 02] });
         }
+        scarabArray[0] = Instantiate(scarab, new Vector3(41.5f, 2f, -21.22f), Quaternion.Euler(new Vector3(90, 90, -90)));
+        scarabArray[1] = Instantiate(scarab, new Vector3(116f, 2f, 6f), Quaternion.Euler(new Vector3(90, 90, -90)));
+        scarabArray[2] = Instantiate(scarab, new Vector3(-80f, 2f, -51f), Quaternion.Euler(new Vector3(90, 90, -90)));
         _player = GameObject.FindGameObjectWithTag("Player");
     }
 
@@ -114,8 +121,18 @@ public class GameManager : MonoBehaviour {
             enemyScripts[i].setPatrolPoint(new Vector3[3] { EnemPatrolPoints[i, 0], EnemPatrolPoints[i, 1], EnemPatrolPoints[i, 02] });
         }
         _player.transform.position = new Vector3(123.59f, 1.28f, -89.3f);
-        Player.resetHasKey();
 
+        for(int i = 0; i < 3; i++)
+        {
+            if(scarabArray[i] != null)
+            {
+                Destroy(scarabArray[0]);
+            }
+        }
+        scarabArray[0] = Instantiate(scarab, new Vector3(41.5f, 2f, -21.22f), Quaternion.Euler(new Vector3(90, 90, -90)));
+        scarabArray[1] = Instantiate(scarab, new Vector3(116f, 2f, 6f), Quaternion.Euler(new Vector3(90, 90, -90)));
+        scarabArray[2] = Instantiate(scarab, new Vector3(-80f, 2f, -51f), Quaternion.Euler(new Vector3(90, 90, -90)));
+        Player.resetHasKey();
     }
 
     public static void Interact()

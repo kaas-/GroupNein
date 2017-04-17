@@ -197,5 +197,6 @@ public class Enemy : MonoBehaviour {
     {
         patrolPoints = patrolPoint;
         curTar = patrolPoints[0];
+        state = "Patrol";
     }
 }
