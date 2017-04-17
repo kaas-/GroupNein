@@ -6,7 +6,11 @@ using UnityEngine.SceneManagement;
 public class GameManager : MonoBehaviour {
 
     private static GameManager instance = null;
-    private static bool playing = false;
+    private static PlayState _playState;
+
+    public enum PlayState { StartScreen, Playing, EndScreen };
+
+
     public static int amountOfEnemies = 3;
     public static Vector3[,] EnemPatrolPoints = new Vector3[3,3];
 
@@ -16,6 +20,7 @@ public class GameManager : MonoBehaviour {
     private static Enemy[] enemyScripts;
     private static Enemy _enemy;
     private static GameObject _player;
+
 
     // Use this for initialization
     private void Awake()
@@ -65,32 +70,41 @@ public class GameManager : MonoBehaviour {
     private void Update()
     {
         //Debug.Log(_player.transform.position);
-        if (playing)
+        switch (_playState)
         {
-            //_enemy.stateControl(_player, !Player.IsRunning);
-            for(int i = 0; i < enemies.Length; i++)
-            {
-                enemyScripts[i].stateControl(_player, !Player.IsRunning);
-            }
-            InputManager.CheckEButton();
-            InputManager.CheckRunButton();
+            case PlayState.StartScreen:
+                InputManager.CheckStartButton();
+                break;
+            case PlayState.Playing:
+                for (int i = 0; i < enemies.Length; i++)
+                {
+                    enemyScripts[i].stateControl(_player, !Player.IsRunning);
+                }
+                InputManager.CheckEButton();
+                InputManager.CheckRunButton();
+                Player.CheckInteractables();
+                break;
+            case PlayState.EndScreen:
+                InputManager.CheckResetButton();
+                break;
+            default:
+                break;
         }
-        else
-        {
-            InputManager.CheckStartButton();
-        }
+
 
     }
 
     public static void StartGame()
     {
-        playing = true;
+        _playState = PlayState.Playing;
+        UIManager.StartGame();
         print("Started");
     }
 
     public static void EndGame()
     {
-        playing = false;
+        _playState = PlayState.EndScreen;
+        UIManager.EndGame();
     }
 
     public static void ResetGame()
@@ -105,7 +119,7 @@ public class GameManager : MonoBehaviour {
             enemyScripts[i] = enemies[i].GetComponent<Enemy>();
             enemyScripts[i].setPatrolPoint(new Vector3[3] { EnemPatrolPoints[i, 0], EnemPatrolPoints[i, 1], EnemPatrolPoints[i, 02] });
         }*/
-        playing = false;
+        _playState = PlayState.StartScreen;
         enemies = GameObject.FindGameObjectsWithTag("Enemy");
         for(int i = 0; i < enemies.Length; i++)
         {
@@ -120,7 +134,7 @@ public class GameManager : MonoBehaviour {
             enemyScripts[i].setPatrolPoint(new Vector3[3] { EnemPatrolPoints[i, 0], EnemPatrolPoints[i, 1], EnemPatrolPoints[i, 02] });
         }
         _player.transform.position = new Vector3(123.59f, 1.28f, -89.3f);
-        Player.resetHasKey();
+        Player.resetScarabs();
 
     }
 
@@ -128,17 +142,7 @@ public class GameManager : MonoBehaviour {
     {
         Debug.Log("Interacting");
         Player.Interact();
-        //UIManager.Test();
         
     }
 
-    public static bool GetPlaying()
-    {
-        return playing;
-    }
-
-    private void tester()
-    {
-
-    }
 }

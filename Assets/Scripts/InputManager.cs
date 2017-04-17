@@ -46,4 +46,9 @@ public class InputManager : MonoBehaviour {
             Player.IsRunning = true;
         }
     }
+
+    public static void CheckResetButton()
+    {
+        GameManager.ResetGame();
+    }
 }
