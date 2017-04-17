@@ -43,7 +43,7 @@ public class Player : MonoBehaviour {
                     if (_scarabsInInventory == 3)
                     {
                         Debug.Log("You win!");
-                        GameManager.ResetGame();
+                        GameManager.EndGame();
                     }
                     else
                     {
@@ -77,6 +77,7 @@ public class Player : MonoBehaviour {
                     UIManager.ShowInteractMessage(UIManager.InteractMessages.OpenDoor);
                     break;
                 default:
+                    UIManager.HideInteractMessage();
                     break;
             }
         }
@@ -89,7 +90,6 @@ public class Player : MonoBehaviour {
     public static void resetScarabs()
     {
         _scarabsInInventory = 0;
-        UIManager.ResetScarabs();
     }
 }
 	

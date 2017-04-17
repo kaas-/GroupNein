@@ -85,7 +85,7 @@ public class UIManager : MonoBehaviour {
         foreach (GameObject scarab in instance.ScarabArray)
         {
             scarab.GetComponent<RawImage>().texture = Resources.Load("scarab_black") as Texture2D;
-            scarab.GetComponent<RawImage>().color = new Color(255, 255, 255, 65);
+            scarab.GetComponent<RawImage>().color = new Color(1f, 1f, 1f, 0.4f);
         }
     }
 	
@@ -99,6 +99,12 @@ public class UIManager : MonoBehaviour {
     {
         instance.WhilePlaying.SetActive(false);
         instance.WinScreen.SetActive(true);
+    }
+
+    public static void ResetGame()
+    {
+        instance.WinScreen.SetActive(false);
+        instance.StartScreen.SetActive(true);
     }
 
 }

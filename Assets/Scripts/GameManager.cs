@@ -74,7 +74,14 @@ public class GameManager : MonoBehaviour {
         scarabArray[0] = Instantiate(scarab, new Vector3(41.5f, 2f, -21.22f), Quaternion.Euler(new Vector3(90, 90, -90)));
         scarabArray[1] = Instantiate(scarab, new Vector3(116f, 2f, 6f), Quaternion.Euler(new Vector3(90, 90, -90)));
         scarabArray[2] = Instantiate(scarab, new Vector3(-80f, 2f, -51f), Quaternion.Euler(new Vector3(90, 90, -90)));
+
+        foreach(GameObject scarab in scarabArray)
+        {
+            scarab.tag = "Scarab";
+        }
+
         _player = GameObject.FindGameObjectWithTag("Player");
+        _playState = PlayState.StartScreen;
     }
 
     // Update is called once per frame
@@ -94,6 +101,7 @@ public class GameManager : MonoBehaviour {
                 InputManager.CheckEButton();
                 InputManager.CheckRunButton();
                 Player.CheckInteractables();
+
                 break;
             case PlayState.EndScreen:
                 InputManager.CheckResetButton();
@@ -137,8 +145,9 @@ public class GameManager : MonoBehaviour {
         }
         _player.transform.position = new Vector3(123.59f, 1.28f, -89.3f);
         Player.resetScarabs();
+        UIManager.ResetScarabs();
 
-        for(int i = 0; i < 3; i++)
+        for (int i = 0; i < 3; i++)
         {
             if(scarabArray[i] != null)
             {
@@ -148,6 +157,8 @@ public class GameManager : MonoBehaviour {
         scarabArray[0] = Instantiate(scarab, new Vector3(41.5f, 2f, -21.22f), Quaternion.Euler(new Vector3(90, 90, -90)));
         scarabArray[1] = Instantiate(scarab, new Vector3(116f, 2f, 6f), Quaternion.Euler(new Vector3(90, 90, -90)));
         scarabArray[2] = Instantiate(scarab, new Vector3(-80f, 2f, -51f), Quaternion.Euler(new Vector3(90, 90, -90)));
+
+        UIManager.ResetGame();
     }
 
     public static void Interact()

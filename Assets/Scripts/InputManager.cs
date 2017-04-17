@@ -49,6 +49,9 @@ public class InputManager : MonoBehaviour {
 
     public static void CheckResetButton()
     {
-        GameManager.ResetGame();
+        if(Input.GetKeyDown(KeyCode.Return))
+        {
+            GameManager.ResetGame();
+        }
     }
 }
