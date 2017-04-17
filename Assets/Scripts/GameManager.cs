@@ -37,21 +37,21 @@ public class GameManager : MonoBehaviour {
     {
         mummyEne2 = mummyEne;
         //setting up Patrol Points
-        EnemPatrolPoints[0, 0] = new Vector3(123, 0.9f, -85);
-        EnemPatrolPoints[0, 1] = new Vector3(100, 0.9f, -50);
-        EnemPatrolPoints[0, 2] = new Vector3(100, 0.9f, -50);
+        EnemPatrolPoints[0, 0] = new Vector3(41, 0.9f, -49);
+        EnemPatrolPoints[0, 1] = new Vector3(0, 0.9f, -49);
+        EnemPatrolPoints[0, 2] = new Vector3(-23.5f, 0.9f, -71);
 
-        EnemPatrolPoints[1, 0] = new Vector3(123, 0.9f, -85);
-        EnemPatrolPoints[1, 1] = new Vector3(100, 0.9f, -50);
-        EnemPatrolPoints[1, 2] = new Vector3(100, 0.9f, -50);
+        EnemPatrolPoints[1, 0] = new Vector3(-31, 0.9f, -84);
+        EnemPatrolPoints[1, 1] = new Vector3(-60.5f, 0.9f, -68);
+        EnemPatrolPoints[1, 2] = new Vector3(-37, 0.9f, -40);
 
-        EnemPatrolPoints[2, 0] = new Vector3(123, 0.9f, -85);
-        EnemPatrolPoints[2, 1] = new Vector3(100, 0.9f, -50);
-        EnemPatrolPoints[2, 2] = new Vector3(100, 0.9f, -50);
+        EnemPatrolPoints[2, 0] = new Vector3(-31, 0.9f, 22);
+        EnemPatrolPoints[2, 1] = new Vector3(-54, 0.9f, -15);
+        EnemPatrolPoints[2, 2] = new Vector3(-54, 0.9f, 20);
 
-        EnemPatrolPoints[3, 0] = new Vector3(123, 0.9f, -85);
-        EnemPatrolPoints[3, 1] = new Vector3(100, 0.9f, -50);
-        EnemPatrolPoints[3, 2] = new Vector3(100, 0.9f, -50);
+        EnemPatrolPoints[3, 0] = new Vector3(105, 0.9f, -43.5f);
+        EnemPatrolPoints[3, 1] = new Vector3(50, 0.9f, -65);
+        EnemPatrolPoints[3, 2] = new Vector3(80, 0.9f, -30);
 
 
         enemies = new GameObject[amountOfEnemies];
