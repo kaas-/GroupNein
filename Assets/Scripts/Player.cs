@@ -63,6 +63,10 @@ public class Player : MonoBehaviour {
                         
         }
     }
+    public static void resetHasKey()
+    {
+        HasKey = false;
+    }
 }
 	
 
